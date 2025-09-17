@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --color-primary-50:#fff8e6;
+    --color-primary-100:#ffefbf;
+    --color-primary-200:#ffe080;
+    --color-primary-300:#ffd140;
+    --color-primary-400:#ffc20d;
+    --color-primary-500:#ffa800;
+    --font-gilda: 'Gilda Display', serif;
+    --font-playfair: 'Playfair Display', serif;
+}
+
+:root {
+    font-family: 'Gilda Display', serif;
+    /* background-color: var(--color-primary-50); */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
