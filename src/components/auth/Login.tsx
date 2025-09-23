@@ -1,37 +1,46 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import axios from "axios"
-import {  useRef } from "react"
+import {  useEffect, useRef } from "react"
 import { useForm } from "react-hook-form"
 import type { SubmitHandler } from "react-hook-form"
-import type { LoginCredentials } from "../../types/LoginCredentials"
-import { useNavigate } from "react-router-dom"
+import type { LoginCredentials } from "../../types/UserTypes"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { useAuth } from "../../provider/AuthProvider"
 
 const Login = () => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams()
+    const redirectTo = searchParams.get('redirect') || '/dashboard';
     const queryClient= useQueryClient();
     const formRef = useRef<HTMLFormElement>(null);
     const {register,handleSubmit, formState:{errors}} = useForm<LoginCredentials>();
-    
+    const {authUser,login} = useAuth();
+
+    useEffect(()=>{
+        if(authUser.data){
+            navigate(redirectTo, { replace: true })
+        }
+    },[redirectTo, authUser])
+
     const mutation= useMutation({
         mutationFn: async(data:LoginCredentials) => {
-            console.log(data);
-            const result = await axios.post("http://localhost:3000/auth/login",{
-                email: data.email,
-                password: data.password
-            })
-            return result.data;
+            const result = await login(data)
+            return result;
         },
         
         onSuccess:(data) => {
             localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify(data.user));
             queryClient.invalidateQueries({queryKey:['me']});
             navigate('/dashboard');
         }
     });
 
     const onSubmit:SubmitHandler<LoginCredentials> = (data: any) => mutation.mutate(data);
+    
+    if(authUser.isLoading){
+        return
+    }
+    
     
     return (
         <div className="flex flex-col items-center justify-center min-h-lvh bg-gray-100 overflow-y-hidden">
@@ -51,7 +60,7 @@ const Login = () => {
                     <input type="password" {...register('password',{required:true})} placeholder="password" className="border py-1.5 pl-1 border-gray-400 outline-0"/>
                     {errors.password && <span className="text-sm text-red-500">This field is required</span>}
                 </div>
-                <button type="submit" className="border border-primary-500 bg-primary-500 py-1 cursor-pointer text-white hover:bg-white hover:text-primary-500">
+                <button type="submit" className="border border-primary-500 bg-primary-500 py-1 cursor-pointer text-black font-bold hover:bg-white hover:text-primary-500">
                     {mutation.isPending ? 'Logging in...' : 'Login'}
                 </button>
                 <span>If you haven't got an account. Please <Link to='/register' className="text-blue-500 font-bold cursor-pointer">Register</Link> </span>

@@ -1,7 +1,9 @@
-
 const Header = () => {
     return (
-        <header>header</header>
+        <header className="flex justify-between p-4">
+            {/* <h3>Search</h3>
+            <span className="">{user.name}</span> */}
+        </header>
     )
 }
 
