@@ -13,22 +13,22 @@ const Aside:React.FC<AsideProps> = ({logout, isAuthenticated}) => {
     const logoutAndRedirect=()=>{
         logout()
         if(!isAuthenticated){
-            navigate('/login')
+            navigate('/')
         }
         
     }
     return (
-        <div className="flex flex-col gap-2 bg-primary-500 text-black px-2 pt-4 text-lg md:w-[250px] sm:w-20 transition-all ease-in duration-200">
+        <div className="flex flex-col gap-2 bg-primary-500 text-white px-2 pt-4 text-lg md:w-[250px] sm:w-20 transition-all ease-in duration-200 ">
             <ListWithIcon to="dashboard">
                 <Wallet/>
-                <h3 className="text-2xl font-bold hidden md:flex">Expenses Tracker</h3>
+                <h3 className="text-2xl font-bold hidden md:flex text-white">Expenses Tracker</h3>
             </ListWithIcon>
 
             <hr />
             <div className="mt-6 flex flex-col gap-6">
                 <ListWithIcon to="dashboard">
                     <Home/>
-                    <h3>Dashboard</h3>
+                    <h3 className="hidden md:flex">Dashboard</h3>
                 </ListWithIcon>
                 <ListWithIcon to="analytics">
                     <Analytics/>

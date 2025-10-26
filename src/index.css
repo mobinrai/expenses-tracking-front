@@ -7,16 +7,35 @@
     --color-primary-200:#ffe080;
     --color-primary-300:#ffd140;
     --color-primary-400:#ffc20d;
-    --color-primary-500:#ffa800;
+    --color-primary-500:#bd1e51;
     --font-gilda: 'Gilda Display', serif;
     --font-playfair: 'Playfair Display', serif;
 }
 
 :root {
     font-family: 'Gilda Display', serif;
-    /* background-color: var(--color-primary-50); */
     color: #333;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+@layer components{
+    .btn-primary{
+        @apply text-black font-bold bg-[#bd1e51] w-48 rounded-md py-1.5 cursor-pointer transition-all duration-500 shadow-xl/30 hover:bg-transparent border border-[#bd1e51]
+    }
+    
+    .form-input{
+        @apply border border-gray-400 py-2 px-1 outline-0 cursor-pointer
+    }
+
+    .error-message{
+        @apply text-xs tracking-wider font-medium text-[#c61b1b] mt-0.5 font-serif
+    }
+}
+
+@layer utilities {
+    .no-scroll{
+        overflow: hidden !important;
+    }
 }

@@ -4,8 +4,9 @@ export interface IUser {
     email: string;
     password: string;    
     currency?:string;
+    accountId:string;
     settings?:{
         darkMode?:boolean;
         notifications?:boolean;
-    }
+    },
 }
